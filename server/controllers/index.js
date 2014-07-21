@@ -3,12 +3,18 @@ var router = express.Router();
 var matrix = require('./matrix');
 
 /* GET home page. */
-router.get('/api/:name', function(req, res) {
+router.get('/:name', function(req, res) {
 
   //sample json api to get data from mongodb
-  req.db.collections("test").find().then(function(data){
-    res.json(data);
-  });
+  // req.db.collections("test").find({}).then(function(data){
+  //   res.json(data);
+  // });
+
+  res.json({
+    application: "Angular-Express",
+    name: req.params.name,
+    message: "Hello World"
+    });
 
 });
 

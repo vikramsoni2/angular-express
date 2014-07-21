@@ -19,7 +19,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, config.viewDir));
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -36,8 +36,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-
-app.use('/', routes);
 app.use('/api', controllers);
 
 /// catch 404 and forward to error handler
@@ -54,10 +52,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+        res.send("<h1>"+err.message+"<h1>"+"<h2>"+err.status+"<h2>"+"<p><pre>"+err.stack+"<pre></p>");
     });
 }
 
@@ -65,10 +60,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+    res.send("<h1>"+err.message+"<h1>");
 });
 
 app.set('port', process.env.PORT || config.appPort);
